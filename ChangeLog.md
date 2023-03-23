@@ -2,6 +2,11 @@ CHANGELOG
 --------------------------------
 --------------------------------
 
+ver 1.2.3 (23rd March 2023)
+------------------------------
+--> Bar charts successfully get the data from database
+--> Add contact UI added
+
 ver 1.2.2(23rd March 2023)
 -------------------------------
 --> bar chart added

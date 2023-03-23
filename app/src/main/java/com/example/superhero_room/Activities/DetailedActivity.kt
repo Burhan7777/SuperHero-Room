@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -62,11 +63,34 @@ class DetailedActivity : AppCompatActivity() {
                 binding.height.text = superheroEntity?.height
                 binding.weight.text = superheroEntity?.weight
                 binding.superheroImage.setImageBitmap(superheroBitmap)
+                setupBarChart()
             }
         }
 
-        setupBarChart()
+        toastsOfPowerImages()
 
+    }
+
+    private fun toastsOfPowerImages() {
+        binding.intelligenceImage.setOnClickListener {
+            Toast.makeText(this, "Intelligence", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.speedImage.setOnClickListener {
+            Toast.makeText(this, "Speed", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.strengthImage.setOnClickListener {
+            Toast.makeText(this, "Strength", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.durabilityImage.setOnClickListener {
+            Toast.makeText(this, "Durability", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.combatImage.setOnClickListener {
+            Toast.makeText(this, "Combat", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupBarChart() {
@@ -95,17 +119,14 @@ class DetailedActivity : AppCompatActivity() {
         chart.setTouchEnabled(false)
         chart.description.isEnabled = false
         chart.legend.isEnabled = false
-        chart.axisLeft.isEnabled = false
-        chart.axisRight.isEnabled = false
-        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        chart.axisLeft.isEnabled = true
+        chart.axisRight.isEnabled = true
+        chart.axisLeft.axisMinimum = 0F
+        chart.axisRight.axisMinimum = 0F
         chart.xAxis.setDrawAxisLine(false)
         chart.xAxis.setDrawGridLines(false)
-        chart.xAxis.setCenterAxisLabels(true)
-        chart.xAxis.setLabelCount(names.size)
         chart.xAxis.granularity = 1f
-        chart.xAxis.mLabelWidth = 30
-        chart.xAxis.mLabelHeight = 30
-        chart.xAxis.labelRotationAngle = 270f
+        binding.barChart.setFitBars(true)
         //   chart.xAxis.valueFormatter = IndexAxisValueFormatter(names)
         chart.xAxis.valueFormatter = object : IndexAxisValueFormatter(names) {
             override fun getFormattedValue(value: Float, axis: AxisBase): String {
@@ -126,8 +147,6 @@ class DetailedActivity : AppCompatActivity() {
 
         // binding.barChart.getAxisRight().setEnabled(false)
 
-        val legend: Legend = binding.barChart.getLegend()
-        legend.isEnabled = false
 
         var barDataSet: BarDataSet = BarDataSet(barEntry, "Strength Set")
         barDataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
@@ -135,7 +154,6 @@ class DetailedActivity : AppCompatActivity() {
         var barData: BarData = BarData(barDataSet)
         barData.barWidth = 5f
         binding.barChart.data = barData
-        binding.barChart.setFitBars(true)
         binding.barChart.description.isEnabled = false
 
         binding.barChart.animateY(1500, Easing.EaseInOutCubic)

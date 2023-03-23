@@ -1,5 +1,6 @@
 package com.example.superhero_room.Activities
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -57,6 +58,10 @@ class MainActivity : AppCompatActivity() {
             addImagesToInternalStorage("Batman.jpg", bitmapBatman)
             addImagesToInternalStorage("Wonder Woman.jpg", bitmapWonderWoman)
             addImagesToInternalStorage("Flash.jpg", bitmapFlash)
+        }
+
+        binding.addSuperHeroActivityFAB.setOnClickListener {
+            startActivity(Intent(this, AddSuperHeroActivity::class.java))
         }
 
     }

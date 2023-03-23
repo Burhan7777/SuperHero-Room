@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/intelligence"
-                    android:layout_weight="1"
+                    android:layout_weight="1.1"
                     app:layout_constraintEnd_toStartOf="@+id/strengthImage"
                     app:layout_constraintHorizontal_bias="0.51"
                     app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/strength"
-                    android:layout_weight="0.5"
+                    android:layout_weight="1"
                     app:layout_constraintEnd_toStartOf="@+id/speedImage"
                     app:layout_constraintStart_toEndOf="@+id/intelligenceImage"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -103,7 +103,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/speed"
-                    android:layout_weight="1.2"
+                    android:layout_weight="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/strengthImage"
+                    app:layout_constraintTop_toBottomOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/durabilityImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/durability"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/strengthImage"
+                    app:layout_constraintTop_toBottomOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/combatImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/combat"
+                    android:layout_weight="0.6"
+                    android:layout_gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/strengthImage"
                     app:layout_constraintTop_toBottomOf="parent" />

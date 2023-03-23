@@ -10,9 +10,21 @@
         android:id="@+id/mainRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        tools:listitem="@layout/single_row_layout"/>
+        tools:listitem="@layout/single_row_layout" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addSuperHeroActivityFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/fab_square"
+        android:src="@drawable/superheroadd"
+        app:backgroundTint="#96DED1"
+        app:tint ="@null"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
