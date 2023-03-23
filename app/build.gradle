@@ -47,10 +47,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    // AA chart dependency
-    implementation 'com.github.AAChartModel:AAChartCore-Kotlin:7.1.0'
+    //MP CHART DEPENDENCY
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    // Strawberry chart dependency
+    //STRAWBERRY CHART
     implementation 'com.github.STRAIBERRY-AI-INC:Straiberry-charts:1.1.0'
 
     // ROOM DATABASE DEPENDENCY

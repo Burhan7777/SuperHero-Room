@@ -21,26 +21,24 @@ data class SuperheroEntity constructor(
     @ColumnInfo(name = "weight")
     var weight: String,
 
-    @ColumnInfo(name = "species")
-    var species: String,
 
     /*@ColumnInfo(name = "powers")
     private val powers: Array<String>,*/
 
     @ColumnInfo(name = "intelligence")
-    var intelligence: String,
+    var intelligence: Float,
 
     @ColumnInfo(name = "strength")
-    var strength: String,
+    var strength: Float,
 
     @ColumnInfo(name = "speed")
-    var speed: String,
+    var speed: Float,
 
     @ColumnInfo(name = "durability")
-    var durability: String,
+    var durability: Float,
 
     @ColumnInfo(name = "combat")
-    var combat: String,
+    var combat: Float,
 
     @ColumnInfo(name = "photoUri")
     var uri: String

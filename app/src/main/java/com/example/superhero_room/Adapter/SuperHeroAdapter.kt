@@ -44,7 +44,9 @@ class SuperHeroAdapter(
         holder.textView.text = superheroNames[position]
         holder.imageView.setImageDrawable(superHeroImages[position])
         holder.imageView.setOnClickListener {
-            context.startActivity(Intent(context, DetailedActivity::class.java))
+            var intent = Intent(context, DetailedActivity::class.java)
+            intent.putExtra("name", superheroNames[position])
+            context.startActivity(intent)
         }
 
     }

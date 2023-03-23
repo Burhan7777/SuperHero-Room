@@ -1,3 +1,69 @@
 <resources>
     <string name="app_name">SuperHero-Room</string>
+
+    <string name="superman_description">
+
+        Kal-El was born on the doomed planet Krypton to Jor-El and Lara.
+        Although Jor-El had hoped to send his pregnant wife away from the
+        planet in a test rocket and avoid its destruction, Kal-El was born
+        earlier than expected, and the life support systems could only support one.
+        Therefore, the baby was sent alone to Earth, the last son of Krypton.
+
+        The baby\'s spaceship landed in Sutton Field near Smallville,
+        Kansas, where he was found by Jonathan and Martha Kent,
+        who raised him as their son, Clark Kent. As he grew older,
+        he began exhibiting extraordinary powers, including super-strength and flight.
+
+
+    </string>
+
+    <string name="batman_description">
+        When leaving from a movie theater and back to home, Thomas and Martha Wayne
+        are accompanied by their 8-year-old son, Bruce. However, unknown to them they
+        would see their only son for one short last moment. Stepping into Park row
+        (now called Crime Alley) out of the shadows is a masked gunman who killed both,
+        Thomas and Martha. While their 8-year-old son watched their brutal death take place,
+        Bruce\'s life would never be the same. At that moment, Bruce made a solemn oath to be
+        an avenger of the knight and fight crime. That moment, Bruce Wayne died and Batman
+        was born! Batman is the World\'s Greatest Detective and can handle any problem.
+        He\'s one of the greatest heroes the world will ever know. Batman!
+    </string>
+
+    <string name="wonderWoman_description">
+
+        Diana was the daughter of Queen Hippolyta, the first child born on Paradise Island
+        in the three thousand year history that the immortal Amazons lived there.
+        The Amazons had been created around 1200 B.C. when the Greek goddesses drew forth
+        the souls of all women who had been murdered by men. One soul was left behind,
+        the one that would be born as Diana. That soul originally belonged to the unborn
+        daughter of the first woman murdered by a man (whom Hippolyta was the reincarnation of).
+        In the late 20th Century, Hippolyta was instructed to mold some clay from the shores of
+        Paradise Island into the form of a baby girl. Six members of the Greek Pantheon then bonded
+        the soul to the clay, giving it life. Each of the six also granted Diana a gift: Demeter,
+        great strength; Athena, wisdom and courage; Artemis, a hunter\'s heart and a communion with
+        animals; Aprhodite, beauty and a loving heart; Hesita, sisterhood with fire; Hermes, speed
+        and the power of flight. Diana grew up surrounded by a legion of sisters and mothers.
+        When she was a young woman, the gods decreed that the Amazons must send an emissary into Man\'s World.
+        Queen Hippolyta ordered a contest to be held, but forbade Diana from participating.
+        Diana disobeyed and did so anyway in disguise, easily winning the contest and being
+        named the Amazon\'s champion. She was given a uniform fashioned from the standard of
+        someone who had visited the island a few decades earlier.
+
+    </string>
+    <string name="flash_description">
+
+        Barry Allen is The Flash, the fastest man alive. Using his super-speed powers,
+        he taps into the Speed Force and becomes a costumed crime-fighter. His position is a
+        legacy in the Flash Family, successor to the original Jay Garrick and predecessor to Wally West.
+        He is a founding member of the Justice League of America.Barry Allen and a twin brother were
+        born on March 19, two weeks late, to Henry and Nora Allen in the small midwestern town of Fallville,
+        Iowa. The brother was pronounced stillborn by Dr. Gilmore. However, in actuality,
+        he had been born healthy, but given to another family, the Thawnes, whose child had died during birth.
+        The lateness of Barry\'s birth only foreshadowed his bad habit of always being late.
+        Barry grew up reading the adventures of his favorite superhero, Jay Garrick,
+        the original Flash, and acted many of his hero\'s adventures out with his friend and
+        future actress, Daphne Dean.When he was a child, his mother was killed and his father was
+        convicted of the crime. The drive to prove his father was innocent gave Barry a strong belief
+        in justice.
+    </string>
 </resources>
