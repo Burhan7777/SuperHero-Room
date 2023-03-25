@@ -2,6 +2,11 @@ CHANGELOG
 --------------------------------
 --------------------------------
 
+ver 2.0.0 (25th March 2023)
+-----------------------------
+--> Can add new superheros now
+--> RecyclerView optimised with Glide, no freezing on scrolling
+
 ver 1.2.3 (23rd March 2023)
 ------------------------------
 --> Bar charts successfully get the data from database

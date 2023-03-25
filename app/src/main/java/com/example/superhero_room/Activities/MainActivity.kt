@@ -6,8 +6,9 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.graphics.drawable.toBitmap
-import androidx.lifecycle.AndroidViewModel
+import android.util.Base64
+import android.util.Log
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.superhero_room.Adapter.SuperHeroAdapter
@@ -18,52 +19,90 @@ import com.example.superhero_room.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.nio.ByteBuffer
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var adapter: SuperHeroAdapter
     lateinit var viewModel: MainActivityViewModel
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    private var drawable1: Drawable? = null
+    private var images: List<String>? = null
+    private lateinit var bitmapBatman: Bitmap
+    private lateinit var bitmapSuperman: Bitmap
+    private lateinit var bitmapWonderWoman: Bitmap
+    private lateinit var bitmapFlash: Bitmap
+    private var superheros: List<String>? = null
+    private var superheroImages: ArrayList<Drawable>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var superheros = arrayListOf("Batman", "Superman", "Wonder Woman", "Flash")
-        var images = arrayListOf(
-            getDrawable(R.drawable.batman),
-            getDrawable(R.drawable.superman),
-            getDrawable(R.drawable.wonderwoman),
-            getDrawable(R.drawable.flash)
+        superheros = ArrayList()
+
+        images = arrayListOf(
+            /*AppCompatResources.getDrawable(this, R.drawable.batman),
+            AppCompatResources.getDrawable(this, R.drawable.superman),
+            AppCompatResources.getDrawable(this, R.drawable.wonderwoman),
+            AppCompatResources.getDrawable(this, R.drawable.flash)*/
         )
 
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        adapter = SuperHeroAdapter(superheros, images, this)
-        binding.mainRecyclerView.adapter = adapter
-        binding.mainRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        //  binding.progressBarMainActivity.visibility = View.VISIBLE
+
 
         coroutineScope.launch {
-            addToDatabase()
-            val bitmapBatman = BitmapFactory.decodeResource(resources, R.drawable.batman)
-            val bitmapSuperman = BitmapFactory.decodeResource(resources, R.drawable.superman)
-            val bitmapWonderWoman = BitmapFactory.decodeResource(resources, R.drawable.wonderwoman)
-            val bitmapFlash = BitmapFactory.decodeResource(resources, R.drawable.flash)
+            var job = launch {
 
-            addImagesToInternalStorage("Superman.jpg", bitmapSuperman);
-            addImagesToInternalStorage("Batman.jpg", bitmapBatman)
-            addImagesToInternalStorage("Wonder Woman.jpg", bitmapWonderWoman)
-            addImagesToInternalStorage("Flash.jpg", bitmapFlash)
+                bitmapBatman = BitmapFactory.decodeResource(resources, R.drawable.batman)
+                bitmapSuperman = BitmapFactory.decodeResource(resources, R.drawable.superman)
+                bitmapWonderWoman = BitmapFactory.decodeResource(resources, R.drawable.wonderwoman)
+                bitmapFlash = BitmapFactory.decodeResource(resources, R.drawable.flash)
+
+               // addToDatabase()
+
+                addImagesToInternalStorage("Superman.jpg", bitmapSuperman);
+                addImagesToInternalStorage("Batman.jpg", bitmapBatman)
+                addImagesToInternalStorage("Wonder Woman.jpg", bitmapWonderWoman)
+                addImagesToInternalStorage("Flash.jpg", bitmapFlash)
+
+                superheros = viewModel.getNames()
+                images = viewModel.getImages()
+
+                superheroImages = ArrayList()
+
+                for (i in viewModel.getImages()!!.indices) {
+                    val byteArray = Base64.decode(viewModel.getImages()!![i], Base64.DEFAULT)
+                    val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                    superheroImages?.add(bitmap.toDrawable(resources))
+                }
+
+
+            }
+            job.join()
+
+            launch(Dispatchers.Main) {
+                //  for (i in 0..superheros!!.size) {
+                //       Log.i("names", superheroImages!!.size.toString())
+                //  }
+
+                adapter = SuperHeroAdapter(superheros, superheroImages, this@MainActivity)
+                binding.mainRecyclerView.adapter = adapter
+                binding.mainRecyclerView.setHasFixedSize(true)
+                binding.mainRecyclerView.layoutManager =
+                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            }
         }
+
+
+        //  binding.progressBarMainActivity.visibility = View.INVISIBLE
+
 
         binding.addSuperHeroActivityFAB.setOnClickListener {
             startActivity(Intent(this, AddSuperHeroActivity::class.java))
         }
-
     }
 
     private suspend fun addToDatabase() {
@@ -76,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                   "Laser eyes",
                   "Flight"
               ),*/
-            90F, 100F, 100F, 100F, 100F, "random"
+            90F, 100F, 100F, 100F, 100F, convertBitmapToBase64String(bitmapSuperman)
         )
         viewModel.insertSuperHero(supermanEntity)
 
@@ -91,8 +130,9 @@ class MainActivity : AppCompatActivity() {
             29F,
             19F,
             100F,
-            "random"
+            convertBitmapToBase64String(bitmapBatman)
         )
+
         viewModel.insertSuperHero(batmanEntity)
 
         val wonderWomanEntity = SuperheroEntity(
@@ -106,7 +146,7 @@ class MainActivity : AppCompatActivity() {
             85F,
             100F,
             65F,
-            "random"
+            convertBitmapToBase64String(bitmapWonderWoman)
         )
 
         viewModel.insertSuperHero(wonderWomanEntity)
@@ -122,17 +162,24 @@ class MainActivity : AppCompatActivity() {
             100F,
             80F,
             80F,
-            "random"
+            convertBitmapToBase64String(bitmapFlash)
         )
         viewModel.insertSuperHero(flashEntity)
     }
 
     private fun addImagesToInternalStorage(name: String, bitmap: Bitmap) {
         openFileOutput(name, MODE_PRIVATE).use {
-            var byteArrayOutputStream = ByteArrayOutputStream()
+            val byteArrayOutputStream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-            var byteArray = byteArrayOutputStream.toByteArray()
+            val byteArray = byteArrayOutputStream.toByteArray()
             it.write(byteArray)
         }
+    }
+
+    private fun convertBitmapToBase64String(bitmap: Bitmap): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream)
+        var byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 }

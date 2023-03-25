@@ -3,6 +3,7 @@ package com.example.superhero_room.Room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Base64
 
 @Entity(tableName = "superheroDB")
 data class SuperheroEntity constructor(
@@ -40,8 +41,8 @@ data class SuperheroEntity constructor(
     @ColumnInfo(name = "combat")
     var combat: Float,
 
-    @ColumnInfo(name = "photoUri")
-    var uri: String
+    @ColumnInfo(name = "superheroImages")
+    var superheroImages: String
 ) {
 
     // Entity class of superhero DB

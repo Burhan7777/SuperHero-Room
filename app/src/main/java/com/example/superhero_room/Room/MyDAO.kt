@@ -11,5 +11,11 @@ interface MyDAO {
     suspend fun addSuperHero(superheroEntity: SuperheroEntity)
 
     @Query("select * from superheroDB where name ==:name")
-    suspend fun getDetails(name: String) : SuperheroEntity?
+    suspend fun getDetails(name: String): SuperheroEntity?
+
+    @Query("Select name from superheroDB")
+    suspend fun getNames(): List<String>?
+
+    @Query("Select superheroImages from superheroDB")
+    suspend fun getImages() : List<String>?
 }

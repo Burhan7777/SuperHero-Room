@@ -16,8 +16,16 @@ class MainDBRepository constructor(myRoomDatabase: MyRoomDatabase?) {
         myRoomDatabase?.getDao()?.addSuperHero(superheroEntity)
     }
 
-    suspend fun getDetails(name: String):SuperheroEntity? {
-       return myRoomDatabase?.getDao()?.getDetails(name)
+    suspend fun getDetails(name: String): SuperheroEntity? {
+        return myRoomDatabase?.getDao()?.getDetails(name)
+    }
+
+    suspend fun getNames(): List<String>? {
+        return myRoomDatabase?.getDao()?.getNames()
+    }
+
+    suspend fun getImages(): List<String>? {
+        return myRoomDatabase?.getDao()?.getImages()
     }
 
 }
