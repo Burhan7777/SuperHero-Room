@@ -2,6 +2,19 @@ CHANGELOG
 --------------------------------
 --------------------------------
 
+ver 2.... (to be launched)
+-----------------------------
+--> Number only keypad for power ratings
+--> Provide limits to power inputs (between 0-100)
+--> Database moved to assets folder
+--> Image from add superhero should be full size
+
+ver 2.1.1(26th March 2023)
+-----------------------------
+--> RecyclerView updates immediately when superhero is added or deleted
+--> Delete the superhero from DB
+--> Displays toasts on loading data
+
 ver 2.0.0 (25th March 2023)
 -----------------------------
 --> Can add new superheros now

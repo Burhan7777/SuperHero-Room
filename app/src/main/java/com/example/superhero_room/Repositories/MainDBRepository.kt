@@ -28,4 +28,8 @@ class MainDBRepository constructor(myRoomDatabase: MyRoomDatabase?) {
         return myRoomDatabase?.getDao()?.getImages()
     }
 
+    suspend fun deleteSuperHero(name: String) {
+        myRoomDatabase?.getDao()?.deleteSuperHero(name)
+    }
+
 }

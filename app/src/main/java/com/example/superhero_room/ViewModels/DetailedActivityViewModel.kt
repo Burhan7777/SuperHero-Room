@@ -10,7 +10,11 @@ class DetailedActivityViewModel(application: Application) : AndroidViewModel(app
     var myRoomDatabase: MyRoomDatabase? = MyRoomDatabase.getDBInstance(application)
     var mainDBRepository: MainDBRepository = MainDBRepository(myRoomDatabase)
 
-    suspend fun getDetails(name: String): SuperheroEntity?{
-       return mainDBRepository.getDetails(name)
+    suspend fun getDetails(name: String): SuperheroEntity? {
+        return mainDBRepository.getDetails(name)
+    }
+
+    suspend fun deleteSuperHero(name: String) {
+        mainDBRepository.deleteSuperHero(name)
     }
 }

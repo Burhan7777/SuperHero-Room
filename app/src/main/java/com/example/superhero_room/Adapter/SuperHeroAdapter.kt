@@ -40,6 +40,12 @@ class SuperHeroAdapter(
         this.context = context
     }
 
+    fun updateTheList(superheroNames: List<String>?, superHeroImages: List<Drawable>?) {
+        this.superheroNames = superheroNames
+        this.superHeroImages = superHeroImages
+    }
+
+
     constructor() : this(null, null, null)
 
 
@@ -57,7 +63,8 @@ class SuperHeroAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView.text = superheroNames!![position]
         // holder.imageView.setImageDrawable(superHeroImages!![position])
-        Glide.with(context!!).load(superHeroImages!![position]).centerInside().into(holder.imageView)
+        Glide.with(context!!).load(superHeroImages!![position]).centerInside()
+            .into(holder.imageView)
         // Log.i("names",superHeroImages!!.size.toString())
         holder.imageView.setOnClickListener {
             var intent = Intent(context, DetailedActivity::class.java)

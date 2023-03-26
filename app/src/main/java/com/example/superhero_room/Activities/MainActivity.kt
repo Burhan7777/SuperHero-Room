@@ -8,6 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.widget.Adapter
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -16,6 +23,7 @@ import com.example.superhero_room.R
 import com.example.superhero_room.Room.SuperheroEntity
 import com.example.superhero_room.ViewModels.MainActivityViewModel
 import com.example.superhero_room.databinding.ActivityMainBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,16 +50,14 @@ class MainActivity : AppCompatActivity() {
 
         superheros = ArrayList()
 
-        images = arrayListOf(
-            /*AppCompatResources.getDrawable(this, R.drawable.batman),
-            AppCompatResources.getDrawable(this, R.drawable.superman),
-            AppCompatResources.getDrawable(this, R.drawable.wonderwoman),
-            AppCompatResources.getDrawable(this, R.drawable.flash)*/
-        )
+        images = ArrayList()
+
 
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+
         //  binding.progressBarMainActivity.visibility = View.VISIBLE
 
+        Toast.makeText(this, "Loading data", Toast.LENGTH_SHORT).show()
 
         coroutineScope.launch {
             var job = launch {
@@ -61,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 bitmapWonderWoman = BitmapFactory.decodeResource(resources, R.drawable.wonderwoman)
                 bitmapFlash = BitmapFactory.decodeResource(resources, R.drawable.flash)
 
-               // addToDatabase()
+                // addToDatabase()
 
                 addImagesToInternalStorage("Superman.jpg", bitmapSuperman);
                 addImagesToInternalStorage("Batman.jpg", bitmapBatman)
@@ -78,8 +84,6 @@ class MainActivity : AppCompatActivity() {
                     val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                     superheroImages?.add(bitmap.toDrawable(resources))
                 }
-
-
             }
             job.join()
 
@@ -92,18 +96,24 @@ class MainActivity : AppCompatActivity() {
                 binding.mainRecyclerView.adapter = adapter
                 binding.mainRecyclerView.setHasFixedSize(true)
                 binding.mainRecyclerView.layoutManager =
-                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                    StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
             }
         }
 
 
-        //  binding.progressBarMainActivity.visibility = View.INVISIBLE
+        // binding.progressBarMainActivity.visibility = View.INVISIBLE
 
 
         binding.addSuperHeroActivityFAB.setOnClickListener {
             startActivity(Intent(this, AddSuperHeroActivity::class.java))
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(this, "Data Loaded", Toast.LENGTH_SHORT).show()
+    }
+
 
     private suspend fun addToDatabase() {
         val supermanEntity: SuperheroEntity = SuperheroEntity(
@@ -178,7 +188,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun convertBitmapToBase64String(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, byteArrayOutputStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream)
         var byteArray = byteArrayOutputStream.toByteArray()
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }

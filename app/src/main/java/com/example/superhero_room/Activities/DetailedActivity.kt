@@ -1,15 +1,22 @@
 package com.example.superhero_room.Activities
 
-import android.R
+import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.superhero_room.Adapter.SuperHeroAdapter
+import com.example.superhero_room.R
 import com.example.superhero_room.Room.SuperheroEntity
 import com.example.superhero_room.ViewModels.DetailedActivityViewModel
 import com.example.superhero_room.databinding.ActivityDetailedBinding
@@ -23,6 +30,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,6 +64,7 @@ class DetailedActivity : AppCompatActivity() {
                 val file = File("data/data/com.example.superhero_room/files/$name.jpg")
                 superheroBitmap = BitmapFactory.decodeFile(file.absolutePath)
             }
+
             loadingJob.join()
             withContext(Dispatchers.Main) {
                 binding.progressBar.visibility = View.INVISIBLE
@@ -70,6 +79,40 @@ class DetailedActivity : AppCompatActivity() {
         toastsOfPowerImages()
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(com.example.superhero_room.R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.deleteSuperHero -> MaterialAlertDialogBuilder(this)
+                .setTitle("Are you sure you want to delete it")
+                .setMessage("This action cannot be undone !!!")
+                .setPositiveButton("", DialogInterface.OnClickListener { dialog, which ->
+                    coroutineScope.launch {
+                        viewModel.deleteSuperHero(superheroEntity?.name!!)
+
+                        startActivity(Intent(this@DetailedActivity, MainActivity::class.java))
+                    }
+                })
+                .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+
+                })
+                .setPositiveButtonIcon(
+                    AppCompatResources.getDrawable(
+                        this,
+                        R.drawable.deletesuperhero
+                    )
+                )
+                .create()
+                .show()
+
+        }
+        return true
+    }
+
 
     private fun toastsOfPowerImages() {
         binding.intelligenceImage.setOnClickListener {

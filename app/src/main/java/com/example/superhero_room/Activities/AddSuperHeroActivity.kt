@@ -1,5 +1,6 @@
 package com.example.superhero_room.Activities
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -88,6 +89,7 @@ class AddSuperHeroActivity : AppCompatActivity() {
                 bitmapToBeSaved
             )
             finish()
+            startActivity(Intent(this@AddSuperHeroActivity,MainActivity::class.java))
         }
     }
 
