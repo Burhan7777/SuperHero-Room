@@ -2,10 +2,11 @@ CHANGELOG
 --------------------------------
 --------------------------------
 
-ver 2...(to be launched)
+ver 2.3.3(27th March 2023)
 -----------------------------
 --> Fixed clicking add superhero button app crash
 --> Image from add superhero should be full size
+--> Deletes the uploaded image from the internal storage
 
 ver 2.2.2 (27th March 2023)
 -----------------------------

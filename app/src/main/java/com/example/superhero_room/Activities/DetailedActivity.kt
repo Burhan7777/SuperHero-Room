@@ -93,8 +93,12 @@ class DetailedActivity : AppCompatActivity() {
                 .setPositiveButton("", DialogInterface.OnClickListener { dialog, which ->
                     coroutineScope.launch {
                         viewModel.deleteSuperHero(superheroEntity?.name!!)
-
+                        var file = File("/data/data/com.example.superhero_room/files/$name.jpg")
+                        if (file.exists()) {
+                            file.delete()
+                        }
                         startActivity(Intent(this@DetailedActivity, MainActivity::class.java))
+                        finish()
                     }
                 })
                 .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->

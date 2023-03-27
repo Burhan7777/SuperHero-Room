@@ -188,7 +188,8 @@ class MainActivity : AppCompatActivity() {
 
     // This method used to transfer database from assets folder to the database
     // folder however now ifDBExistsOrNot method checks if the database exists or not
-    // if not it adds default superheros to the database otherwise it doesn't
+    // if not it adds default superheros to the database otherwise it doesn't.
+    // Not deleted yet , maybe used in future.
 
 
 /*    private fun moveDBFromAssetsToInternalStorage() {
