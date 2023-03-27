@@ -2,12 +2,16 @@ CHANGELOG
 --------------------------------
 --------------------------------
 
-ver 2.... (to be launched)
+ver 2...(to be launched)
+-----------------------------
+--> Fixed clicking add superhero button app crash
+--> Image from add superhero should be full size
+
+ver 2.2.2 (27th March 2023)
 -----------------------------
 --> Number only keypad for power ratings
 --> Provide limits to power inputs (between 0-100)
---> Database moved to assets folder
---> Image from add superhero should be full size
+--> Database created only once now
 
 ver 2.1.1(26th March 2023)
 -----------------------------

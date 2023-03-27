@@ -63,33 +63,37 @@ class AddSuperHeroActivity : AppCompatActivity() {
 
         binding.saveButton.setOnClickListener {
 
-            coroutineScope.launch {
-                addSuperHero(
-                    binding.nameOfSuperhero.text.toString(),
-                    binding.descriptonOfSuperHero.text.toString(),
-                    binding.heightOfSuperHero.text.toString(),
-                    binding.weightOfSuperHero.text.toString(),
-                    binding.intelligenceOfSuperHero.text.toString().toFloat(),
-                    binding.strengthOfSuperHero.text.toString().toFloat(),
-                    binding.speedOfSuperHero.text.toString().toFloat(),
-                    binding.durabilityOfSuperHero.text.toString().toFloat(),
-                    binding.combatOfSuperHero.text.toString().toFloat(),
-                    convertImageViewToBase64String(binding.superheroUploadImage)
+            var isItInTheLimits = checkTheLimitsOfPower()
+
+            if (isItInTheLimits) {
+                coroutineScope.launch {
+                    addSuperHero(
+                        binding.nameOfSuperhero.text.toString(),
+                        binding.descriptonOfSuperHero.text.toString(),
+                        binding.heightOfSuperHero.text.toString(),
+                        binding.weightOfSuperHero.text.toString(),
+                        binding.intelligenceOfSuperHero.text.toString().toFloat(),
+                        binding.strengthOfSuperHero.text.toString().toFloat(),
+                        binding.speedOfSuperHero.text.toString().toFloat(),
+                        binding.durabilityOfSuperHero.text.toString().toFloat(),
+                        binding.combatOfSuperHero.text.toString().toFloat(),
+                        convertImageViewToBase64String(binding.superheroUploadImage)
+                    )
+                }
+
+                superHeroNames.add(binding.nameOfSuperhero.text.toString())
+                superHeroImages.add(binding.superheroUploadImage.drawable)
+
+                val drawable: Drawable = binding.superheroUploadImage.drawable
+                val bitmapToBeSaved: Bitmap = drawable.toBitmap()
+
+                addImagesToInternalStorage(
+                    binding.nameOfSuperhero.text.toString() + ".jpg",
+                    bitmapToBeSaved
                 )
+                finish()
+                startActivity(Intent(this@AddSuperHeroActivity, MainActivity::class.java))
             }
-
-            superHeroNames.add(binding.nameOfSuperhero.text.toString())
-            superHeroImages.add(binding.superheroUploadImage.drawable)
-
-            val drawable: Drawable = binding.superheroUploadImage.drawable
-            val bitmapToBeSaved: Bitmap = drawable.toBitmap()
-
-            addImagesToInternalStorage(
-                binding.nameOfSuperhero.text.toString() + ".jpg",
-                bitmapToBeSaved
-            )
-            finish()
-            startActivity(Intent(this@AddSuperHeroActivity,MainActivity::class.java))
         }
     }
 
@@ -114,7 +118,8 @@ class AddSuperHeroActivity : AppCompatActivity() {
     private suspend fun addSuperHero(
         name: String, description: String, height: String, weight: String,
         intelligence: Float, strength: Float, speed: Float, durability: Float, combat: Float,
-        superheroImage: String) {
+        superheroImage: String
+    ) {
         var superheroEntity = SuperheroEntity(
             0,
             name, description, height, weight, intelligence,
@@ -122,5 +127,46 @@ class AddSuperHeroActivity : AppCompatActivity() {
         )
 
         viewModel.insertSuperHero(superheroEntity)
+    }
+
+    private fun checkTheLimitsOfPower(): Boolean {
+        var isItInTheLimits = true
+
+        if (binding.strengthOfSuperHero.text.toString()
+                .toInt() > 100 || binding.strengthOfSuperHero.text.toString().toInt() < 0
+        ) {
+            binding.strength.error = "Value needs to be between 0-100"
+            isItInTheLimits = false
+        }
+
+        if (binding.intelligenceOfSuperHero.text.toString()
+                .toInt() > 100 || binding.intelligenceOfSuperHero.text.toString().toInt() < 0
+        ) {
+            binding.intelligence.error = "Value needs to be between 0-100"
+            isItInTheLimits = false
+        }
+
+        if (binding.speedOfSuperHero.text.toString()
+                .toInt() > 100 || binding.speedOfSuperHero.text.toString().toInt() < 0
+        ) {
+            binding.speed.error = "Value needs to be between 0-100"
+            isItInTheLimits = false
+        }
+
+        if (binding.durabilityOfSuperHero.text.toString()
+                .toInt() > 100 || binding.durabilityOfSuperHero.text.toString().toInt() < 0
+        ) {
+            binding.durability.error = "Value needs to be between 0-100"
+            isItInTheLimits = false
+        }
+
+        if (binding.combatOfSuperHero.text.toString()
+                .toInt() > 100 || binding.combatOfSuperHero.text.toString().toInt() < 0
+        ) {
+            binding.combat.error = "Value needs to be between 0-100"
+            isItInTheLimits = false
+        }
+
+        return isItInTheLimits
     }
 }

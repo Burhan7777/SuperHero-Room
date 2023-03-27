@@ -8,12 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.widget.Adapter
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.ViewModelProvider
@@ -23,11 +17,14 @@ import com.example.superhero_room.R
 import com.example.superhero_room.Room.SuperheroEntity
 import com.example.superhero_room.ViewModels.MainActivityViewModel
 import com.example.superhero_room.databinding.ActivityMainBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -57,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         //  binding.progressBarMainActivity.visibility = View.VISIBLE
 
-        Toast.makeText(this, "Loading data", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Loading data from database", Toast.LENGTH_SHORT).show()
 
         coroutineScope.launch {
             var job = launch {
@@ -67,7 +64,12 @@ class MainActivity : AppCompatActivity() {
                 bitmapWonderWoman = BitmapFactory.decodeResource(resources, R.drawable.wonderwoman)
                 bitmapFlash = BitmapFactory.decodeResource(resources, R.drawable.flash)
 
-                // addToDatabase()
+                // moveDBFromAssetsToInternalStorage()
+
+                if (!ifDBExistsOrNot())
+                    addToDatabase()
+
+
 
                 addImagesToInternalStorage("Superman.jpg", bitmapSuperman);
                 addImagesToInternalStorage("Batman.jpg", bitmapBatman)
@@ -107,11 +109,12 @@ class MainActivity : AppCompatActivity() {
         binding.addSuperHeroActivityFAB.setOnClickListener {
             startActivity(Intent(this, AddSuperHeroActivity::class.java))
         }
+
+        Toast.makeText(this, "Data Loaded", Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {
         super.onResume()
-        Toast.makeText(this, "Data Loaded", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -176,6 +179,67 @@ class MainActivity : AppCompatActivity() {
         )
         viewModel.insertSuperHero(flashEntity)
     }
+
+    private fun ifDBExistsOrNot(): Boolean {
+        var file = getDatabasePath("/data/data/com.example.superhero_room/databases/superheroDB")
+        return file.exists()
+    }
+
+
+    // This method used to transfer database from assets folder to the database
+    // folder however now ifDBExistsOrNot method checks if the database exists or not
+    // if not it adds default superheros to the database otherwise it doesn't
+
+
+/*    private fun moveDBFromAssetsToInternalStorage() {
+        var databasePath = "/data/data/com.example.superhero_room/databases/"
+        var databaseName = "superheroDB"
+        var databaseShm = "superheroDB-shm"
+        var databaseWal = "superheroDB-wal"
+
+        var inputStreamDB = assets.open(databaseName)
+        var inputStreamShm = assets.open(databaseShm)
+        var inputStreamWal = assets.open(databaseWal)
+
+        var fileNameDB = databasePath + databaseName
+        var fileNameShm = databasePath + databaseShm
+        var fileNameWal = databasePath + databaseWal
+
+        var outputStreamDB: OutputStream = FileOutputStream(fileNameDB)
+        var outputStreamSHm = FileOutputStream(fileNameShm)
+        var outputStreamWal = FileOutputStream(fileNameWal)
+
+        var byteArrayDB = ByteArray(1024)
+        var byteArraySHm = ByteArray(1024)
+        var byteArrayWal = ByteArray(1024)
+
+        var lengthDB = inputStreamDB.read(byteArrayDB)
+        while (lengthDB > 0) {
+            outputStreamDB.write(byteArrayDB, 0, lengthDB)
+        }
+
+        var lengthShm = inputStreamShm.read(byteArraySHm)
+        while (lengthShm > 0) {
+            outputStreamSHm.write(byteArraySHm, 0, lengthShm)
+        }
+
+        var lengthWal = inputStreamWal.read(byteArrayWal)
+        while (lengthWal > 0) {
+            outputStreamWal.write(byteArrayWal, 0, lengthWal)
+        }
+
+        outputStreamDB.flush()
+        outputStreamDB.close()
+        inputStreamDB.close()
+
+        outputStreamSHm.flush()
+        outputStreamSHm.close()
+        inputStreamShm.close()
+
+        outputStreamWal.flush()
+        outputStreamWal.close()
+        inputStreamWal.close()
+    }*/
 
     private fun addImagesToInternalStorage(name: String, bitmap: Bitmap) {
         openFileOutput(name, MODE_PRIVATE).use {

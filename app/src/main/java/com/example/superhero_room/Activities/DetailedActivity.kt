@@ -109,10 +109,14 @@ class DetailedActivity : AppCompatActivity() {
                 .create()
                 .show()
 
+            R.id.editSuperHero -> Toast.makeText(
+                this@DetailedActivity,
+                "Will be available soon",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         return true
     }
-
 
     private fun toastsOfPowerImages() {
         binding.intelligenceImage.setOnClickListener {
