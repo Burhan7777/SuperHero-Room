@@ -8,7 +8,5 @@ This is a room database of superheros with some predefined superheros and an opt
 
 ![App Screenshot]
 https://imgur.com/a/IQaHvSk
-https://imgur.com/WmEojix
-https://imgur.com/iUolCpk
-https://imgur.com/vf3Zw2r
+
 
