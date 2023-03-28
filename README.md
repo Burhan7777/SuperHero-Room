@@ -9,5 +9,4 @@ This is a room database of superheros with some predefined superheros and an opt
 ![App Screenshot]
 https://imgur.com/a/IQaHvSk
 
-https://img.shields.io/github/release/USER/REPO.svg?logo=github
 
